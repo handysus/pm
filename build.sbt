@@ -13,7 +13,10 @@ libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2
 libraryDependencies += "com.typesafe.play" %% "play-slick" % "3.0.3"
 libraryDependencies += "com.typesafe.play" %% "play-slick-evolutions" % "3.0.3"
 
-libraryDependencies += "com.h2database" % "h2" % "1.4.196"
+libraryDependencies += "org.postgresql" % "postgresql" % "9.4.1212"
+
+
+//libraryDependencies += "com.h2database" % "h2" % "1.4.196"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.example.pm.controllers._"
