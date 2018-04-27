@@ -15,4 +15,6 @@ trait PajakMasukanRepository {
 
   def update(pajakMasukan: PajakMasukan): Future[Option[PajakMasukan]]
 
+  def delete(id: Option[Long]): Future[Int]
+
 }

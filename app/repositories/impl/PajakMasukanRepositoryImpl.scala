@@ -17,31 +17,18 @@ class PajakMasukanRepositoryImpl @Inject()(dbConfigProvider: DatabaseConfigProvi
 
   private class PajakMasukanTable(tag: Tag) extends Table[PajakMasukan](tag, "pm") {
     def id = column[Option[Long]]("id", O.PrimaryKey, O.AutoInc)
-
     def kodeJenisTransaksi = column[String]("kodejenistransaksi")
-
     def fgPengganti = column[String]("fgpengganti")
-
     def noFaktur = column[String]("nofaktur")
-
     def masaPajak = column[String]("masapajak")
-
     def tahunPajak = column[String]("tahunpajak")
-
     def tanggalFaktur = column[String]("tanggalfaktur")
-
     def npwp = column[String]("npwp")
-
     def nama = column[String]("nama")
-
     def alamat = column[String]("alamat")
-
     def jumlahDpp = column[Double]("jumlahdpp")
-
     def jumlahPpn = column[Double]("jumlahppn")
-
     def jumlahPpnbm = column[Double]("jumlahppnbm")
-
     def referensi = column[Option[String]]("referensi")
 
     def * = (
@@ -95,5 +82,10 @@ class PajakMasukanRepositoryImpl @Inject()(dbConfigProvider: DatabaseConfigProvi
       _ <- db.run(p.filter(_.id === pm.id).update(pm))
       r <- findById(pm.id)
     } yield r
+  }
+
+  override
+  def delete(id: Option[Long]): Future[Int] = {
+    db.run(p.filter(_.id === id).delete)
   }
 }

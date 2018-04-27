@@ -54,4 +54,9 @@ class HomeController @Inject()(pajakMasukanRepository: PajakMasukanRepository, c
     )
   }
 
+  def delete(id: Long) = Action.async{ implicit request =>
+    pajakMasukanRepository
+      .delete(Some(id))
+      .map(_ => Ok)
+  }
 }
