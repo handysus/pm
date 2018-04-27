@@ -1,21 +1,24 @@
-# pm
-CRUD rest api using Play Framework
+# CRUD rest api using Play Framework
 
 Library:
 Slick
 
 Routes
+<pre>
 GET     /get                         controllers.HomeController.findAllPm
 GET     /get/:id                     controllers.HomeController.findById(id: Long)
 POST    /create                      controllers.HomeController.createPm
 PUT     /update                      controllers.HomeController.updatePm
 DELETE  /delete/:id                  controllers.HomeController.delete(id: Long)
+</pre>
 
+<pre>
 Database Name: pm
-
 Postgresql
+</pre>
 
 Schema SQL :
+<pre>
 CREATE TABLE public.pm
 (
   id bigint NOT NULL DEFAULT nextval('pm_id_seq'::regclass),
@@ -39,3 +42,4 @@ WITH (
 );
 ALTER TABLE public.pm
   OWNER TO postgres;
+</pre>
