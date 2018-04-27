@@ -6,12 +6,12 @@ import play.api._
 import play.api.libs.json.Json
 import play.api.libs.json.Json.toJson
 import play.api.mvc._
-import repositories.PajakMasukanRepository
+import services.PajakMasukanService
 
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class HomeController @Inject()(pajakMasukanRepository: PajakMasukanRepository, cc: ControllerComponents)
+class HomeController @Inject()(pajakMasukanService: PajakMasukanService, cc: ControllerComponents)
                               (implicit ec: ExecutionContext) extends AbstractController(cc) {
 
   def index() = Action { implicit request: Request[AnyContent] =>
@@ -19,13 +19,13 @@ class HomeController @Inject()(pajakMasukanRepository: PajakMasukanRepository, c
   }
 
   def findAllPm = Action.async {implicit request =>
-    pajakMasukanRepository.findAll().map{
+    pajakMasukanService.findAll().map{
       pm => Ok(Json.toJson(pm))
     }
   }
 
   def findById(id: Long) = Action.async{ implicit request =>
-    pajakMasukanRepository.findById(Some(id))
+    pajakMasukanService.findById(Some(id))
       .map(toJson(_))
       .map(Ok(_))
   }
@@ -34,7 +34,7 @@ class HomeController @Inject()(pajakMasukanRepository: PajakMasukanRepository, c
     request.body.validate[PajakMasukan].fold(
       _ => Future.successful(BadRequest(Json.obj("errorMessage" -> "Invalid Bad Request"))),
       pm => {
-        pajakMasukanRepository
+        pajakMasukanService
           .create(pm)
           .map(toJson(_))
           .map(Created(_))
@@ -46,7 +46,7 @@ class HomeController @Inject()(pajakMasukanRepository: PajakMasukanRepository, c
     request.body.validate[PajakMasukan].fold(
       _ => Future.successful(BadRequest(Json.obj("errorMessage"->"Invalid Bad Request"))),
       pm => {
-        pajakMasukanRepository
+        pajakMasukanService
           .update(pm)
           .map(toJson(_))
           .map(Accepted(_))
@@ -55,7 +55,7 @@ class HomeController @Inject()(pajakMasukanRepository: PajakMasukanRepository, c
   }
 
   def delete(id: Long) = Action.async{ implicit request =>
-    pajakMasukanRepository
+    pajakMasukanService
       .delete(Some(id))
       .map(_ => Ok)
   }
