@@ -24,6 +24,12 @@ class HomeController @Inject()(pajakMasukanRepository: PajakMasukanRepository, c
     }
   }
 
+  def findById(id: Long) = Action.async{ implicit request =>
+    pajakMasukanRepository.findById(Some(id))
+      .map(toJson(_))
+      .map(Ok(_))
+  }
+
   def createPm() = Action.async(parse.json) { implicit request =>
     request.body.validate[PajakMasukan].fold(
       _ => Future.successful(BadRequest(Json.obj("errorMessage" -> "Invalid Bad Request"))),
@@ -32,6 +38,18 @@ class HomeController @Inject()(pajakMasukanRepository: PajakMasukanRepository, c
           .create(pm)
           .map(toJson(_))
           .map(Created(_))
+      }
+    )
+  }
+
+  def updatePm() = Action.async(parse.json) { implicit request =>
+    request.body.validate[PajakMasukan].fold(
+      _ => Future.successful(BadRequest(Json.obj("errorMessage"->"Invalid Bad Request"))),
+      pm => {
+        pajakMasukanRepository
+          .update(pm)
+          .map(toJson(_))
+          .map(Accepted(_))
       }
     )
   }

@@ -13,4 +13,6 @@ trait PajakMasukanRepository {
 
   def create(pajakMasukan: PajakMasukan): Future[Option[PajakMasukan]]
 
+  def update(pajakMasukan: PajakMasukan): Future[Option[PajakMasukan]]
+
 }
