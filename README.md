@@ -19,9 +19,9 @@ Postgresql
 
 Schema SQL :
 <pre>
-CREATE TABLE public.pm
+CREATE TABLE pm
 (
-  id bigint NOT NULL DEFAULT nextval('pm_id_seq'::regclass),
+  id bigserial NOT NULL PRIMARY KEY,
   kodejenistransaksi character varying(100),
   fgpengganti character varying(100),
   nofaktur character varying(100),
@@ -34,12 +34,6 @@ CREATE TABLE public.pm
   jumlahdpp integer,
   jumlahppn integer,
   jumlahppnbm integer,
-  referensi character varying(100),
-  CONSTRAINT pm_pkey PRIMARY KEY (id)
+  referensi character varying(100)
 )
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE public.pm
-  OWNER TO postgres;
 </pre>
